@@ -29,26 +29,25 @@ int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
 
-  auto node = rclcpp::Node::make_shared("forward_node");
+  auto node = rclcpp::Node::make_shared("patrolling_node");
 
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("forward_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("turn_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("move_bt_node"));
 
-  std::string xml_bt =
-    R"(
-    <root main_tree_to_execute = "MainTree" >
-      <BehaviorTree ID="MainTree">
-          <Forward />
-      </BehaviorTree>
-    </root>)";
+  std::string pkgpath = ament_index_cpp::get_package_share_directory("pack1");
+  std::string xml_file = pkgpath + "/behavior_tree_xml/thief.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);
-  BT::Tree tree = factory.createTreeFromText(xml_bt, blackboard);
+  BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
+
+  auto publisher_zmq = std::make_shared<BT::PublisherZMQ>(tree, 10, 1666, 1667);
 
   rclcpp::Rate rate(10);
+
   bool finish = false;
   while (!finish && rclcpp::ok()) {
     finish = tree.rootNode()->executeTick() != BT::NodeStatus::RUNNING;

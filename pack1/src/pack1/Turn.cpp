@@ -15,19 +15,19 @@
 #include <string>
 #include <iostream>
 
-#include "bt_bumpgo/Back.hpp"
+#include "pack1/Turn.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace bt_bumpgo
+namespace pack1
 {
 
 using namespace std::chrono_literals;
 
-Back::Back(
+Turn::Turn(
   const std::string & xml_tag_name,
   const BT::NodeConfiguration & conf)
 : BT::ActionNodeBase(xml_tag_name, conf)
@@ -38,35 +38,35 @@ Back::Back(
 }
 
 void
-Back::halt()
+Turn::halt()
 {
 }
 
 BT::NodeStatus
-Back::tick()
+Turn::tick()
 {
   if (status() == BT::NodeStatus::IDLE) {
     start_time_ = node_->now();
   }
 
   geometry_msgs::msg::Twist vel_msgs;
-  vel_msgs.linear.x = -0.3;
+  vel_msgs.angular.z = 0.5;
   vel_pub_->publish(vel_msgs);
 
   auto elapsed = node_->now() - start_time_;
 
   if (elapsed < 3s) {
-    RCLCPP_INFO(node_->get_logger(), "Moving back");
+    RCLCPP_INFO(node_->get_logger(), "Turning");
     return BT::NodeStatus::RUNNING;
   } else {
     return BT::NodeStatus::SUCCESS;
   }
 }
 
-}  // namespace bt_bumpgo
+}  // namespace pack1
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<bt_bumpgo::Back>("Back");
+  factory.registerNodeType<pack1::Turn>("Turn");
 }

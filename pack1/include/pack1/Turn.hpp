@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BT_BUMPGO__TURN_HPP_
-#define BT_BUMPGO__TURN_HPP_
+#ifndef PACK1__TURN_HPP_
+#define PACK1__TURN_HPP_
 
 #include <string>
 
@@ -23,7 +23,7 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace bt_bumpgo
+namespace pack1
 {
 
 class Turn : public BT::ActionNodeBase
@@ -47,6 +47,6 @@ private:
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
 };
 
-}  // namespace bt_bumpgo
+}  // namespace pack1
 
-#endif  // BT_BUMPGO__TURN_HPP_
+#endif  // PACK1__TURN_HPP_

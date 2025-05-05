@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(bt_bumpgo)
+project(pack1)
 
 set(CMAKE_CONFIG_PATH ${CMAKE_MODULE_PATH}  "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CONFIG_PATH}")
@@ -31,16 +31,12 @@ set(dependencies
 
 include_directories(include ${ZMQ_INCLUDE_DIRS})
 
-add_library(forward_bt_node SHARED src/bt_bumpgo/Forward.cpp)
-add_library(back_bt_node SHARED src/bt_bumpgo/Back.cpp)
-add_library(turn_bt_node SHARED src/bt_bumpgo/Turn.cpp)
-add_library(is_obstacle_bt_node SHARED src/bt_bumpgo/IsObstacle.cpp)
+add_library(turn_bt_node SHARED src/pack1/Turn.cpp)
+add_library(move_bt_node SHARED src/pack1/Move.cpp)
 
 list(APPEND plugin_libs
-  forward_bt_node
-  back_bt_node
   turn_bt_node
-  is_obstacle_bt_node
+  move_bt_node
 )
 
 foreach(bt_plugin ${plugin_libs})
@@ -48,13 +44,13 @@ foreach(bt_plugin ${plugin_libs})
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 
-add_executable(bt_bumpgo src/bt_bumpgo_main.cpp)
-ament_target_dependencies(bt_bumpgo ${dependencies})
-target_link_libraries(bt_bumpgo ${ZMQ_LIBRARIES})
+add_executable(pack1 src/bt_thief_main.cpp)
+ament_target_dependencies(pack1 ${dependencies})
+target_link_libraries(pack1 ${ZMQ_LIBRARIES})
 
 install(TARGETS
   ${plugin_libs}
-  bt_bumpgo
+  pack1
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
@@ -78,8 +74,6 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 
   find_package(ament_cmake_gtest REQUIRED)
-
-  add_subdirectory(tests)
 endif()
 
 ament_export_include_directories(include)

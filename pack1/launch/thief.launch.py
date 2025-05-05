@@ -20,13 +20,13 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     bumpgo_cmd = Node(
-        package='bt_bumpgo',
-        executable='bt_bumpgo',
-        name='bt_bumpgo',
+        package='pack1',
+        executable='pack1',
+        name='pack1',
         output='screen',
         remappings=[
             ('/output_vel', '/cmd_vel'),
-            ('/input_scan', '/scan')
+            ('/input_scan', '/scan_filtered')
         ],
         parameters=[
             {'use_sim_time': True}

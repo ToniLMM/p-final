@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef PACK1__FORWARD_HPP_
-#define PACK1__FORWARD_HPP_
+#ifndef PACK1__MOVE_HPP_
+#define PACK1__MOVE_HPP_
 
 #include <string>
 
@@ -26,14 +26,14 @@
 namespace pack1
 {
 
-class Forward : public BT::ActionNodeBase
+class Move : public BT::ActionNodeBase
 {
 public:
-  explicit Forward(
+  explicit Move(
     const std::string & xml_tag_name,
     const BT::NodeConfiguration & conf);
 
-  void halt() {}
+  void halt();
   BT::NodeStatus tick();
 
   static BT::PortsList providedPorts()
@@ -43,9 +43,11 @@ public:
 
 private:
   rclcpp::Node::SharedPtr node_;
+  rclcpp::Time start_time_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
+
 };
 
 }  // namespace pack1
 
-#endif  // PACK1__FORWARD_HPP_
+#endif  // PACK1__MOVE_HPP_
