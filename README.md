@@ -8,6 +8,11 @@
 
 ## Dependencias
 
+Para usar este programa tendremos que tener instalado los siguientes paquetes:
+- [ROS2](https://docs.ros.org/en/jazzy/)
+- [Groot](https://github.com/BehaviorTree/Groot): Este es un programa de interfaz gráfica de usuario (GUI) que le permitirá controlar manualmente el robot. Es opcional, pero muy recomendable
+- [Yolov8](https://github.com/mgonzs13/yolov8_ros): Es un modelo de visión por computadora que utilizaremos para identificar y filtrar objetos
+
 ## Mapeo
 
 ```shell
