@@ -12,6 +12,7 @@ Para usar este programa tendremos que tener instalado los siguientes paquetes:
 - [ROS2](https://docs.ros.org/en/jazzy/)
 - [Groot](https://github.com/BehaviorTree/Groot): Este es un programa de interfaz gráfica de usuario (GUI) que le permitirá controlar manualmente el robot. Es opcional, pero muy recomendable
 - [Yolov8](https://github.com/mgonzs13/yolov8_ros): Es un modelo de visión por computadora que utilizaremos para identificar y filtrar objetos
+- [ZeroMQ](https://zeromq.org): Como el árbol de comportamiento es externo a ros, necesita un middleware de comunicación IOT para la comunicación entre nodos, por eso usamos ZMQ.
 
 ## Mapeo
 
@@ -21,6 +22,8 @@ ros2 launch slam_toolbox online_sync_launch.py
 ros2 run kobuki_keyop kobuki_keyop_node
 ros2 run nav2_map_server map_saver_cli -f [nombre_mapa]
 ```
+
+![mapa_uni](https://github.com/user-attachments/assets/1decf9cc-d560-4a5b-90ce-31b43fc18364)
 
 ## Ejecución
 
