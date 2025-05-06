@@ -12,42 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef PACK1__MOVE_HPP_
-#define PACK1__MOVE_HPP_
+#ifndef THIEF__MOVE_HPP_
+#define THIEF__MOVE_HPP_
 
 #include <string>
+#include <iostream>
+#include <vector>
+#include <memory>
 
+#include "geometry_msgs/msg/pose_stamped.hpp"
+#include "nav2_msgs/action/navigate_to_pose.hpp"
+
+#include "thief/ctrl_support/BTActionNode.hpp"
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "geometry_msgs/msg/twist.hpp"
-#include "rclcpp/rclcpp.hpp"
-
-namespace pack1
+namespace thief
 {
 
-class Move : public BT::ActionNodeBase
+class Move : public thief::BtActionNode<nav2_msgs::action::NavigateToPose>
 {
 public:
   explicit Move(
     const std::string & xml_tag_name,
+    const std::string & action_name,
     const BT::NodeConfiguration & conf);
 
-  void halt();
-  BT::NodeStatus tick();
+  void on_tick() override;
+  BT::NodeStatus on_success() override;
 
   static BT::PortsList providedPorts()
   {
-    return BT::PortsList({});
+    return BT::PortsList(
+      {
+        BT::InputPort<geometry_msgs::msg::PoseStamped>("goal")
+      });
   }
 
 private:
-  rclcpp::Node::SharedPtr node_;
-  rclcpp::Time start_time_;
-  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
-
 };
 
-}  // namespace pack1
 
-#endif  // PACK1__MOVE_HPP_
+}  // namespace thief
+
+#endif  // THIEF__MOVE_HPP_

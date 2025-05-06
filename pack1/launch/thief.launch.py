@@ -20,9 +20,9 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     bumpgo_cmd = Node(
-        package='pack1',
-        executable='pack1',
-        name='pack1',
+        package='thief',
+        executable='thief',
+        name='thief',
         output='screen',
         remappings=[
             ('/output_vel', '/cmd_vel'),

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef PACK1__TURN_HPP_
-#define PACK1__TURN_HPP_
+#ifndef THIEF__MOVE_HPP_
+#define THIEF__MOVE_HPP_
 
 #include <string>
 
@@ -23,13 +23,13 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace pack1
+namespace thief
 {
 
-class Turn : public BT::ActionNodeBase
+class Move : public BT::ActionNodeBase
 {
 public:
-  explicit Turn(
+  explicit Move(
     const std::string & xml_tag_name,
     const BT::NodeConfiguration & conf);
 
@@ -45,8 +45,9 @@ private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Time start_time_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
+
 };
 
-}  // namespace pack1
+}  // namespace thief
 
-#endif  // PACK1__TURN_HPP_
+#endif  // THIEF__MOVE_HPP_

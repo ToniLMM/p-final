@@ -15,14 +15,14 @@
 #include <string>
 #include <iostream>
 
-#include "pack1/Move.hpp"
+#include "thief/Move.hpp"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace pack1
+namespace thief
 {
 
 using namespace std::chrono_literals;
@@ -63,10 +63,10 @@ Move::tick()
   }
 }
 
-}  // namespace pack1
+}  // namespace thief
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<pack1::Move>("Move");
+  factory.registerNodeType<thief::Move>("Move");
 }

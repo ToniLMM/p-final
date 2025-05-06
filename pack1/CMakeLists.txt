@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(pack1)
+project(thief)
 
 set(CMAKE_CONFIG_PATH ${CMAKE_MODULE_PATH}  "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CONFIG_PATH}")
@@ -10,6 +10,12 @@ find_package(behaviortree_cpp_v3 REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(ament_index_cpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(nav2_msgs REQUIRED)
+find_package(yolo_msgs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(lifecycle_msgs REQUIRED)
 
 find_package(ZMQ)
 if(ZMQ_FOUND)
@@ -27,12 +33,18 @@ set(dependencies
     sensor_msgs
     geometry_msgs
     ament_index_cpp
+    rclcpp_action
+    nav2_msgs
+    yolo_msgs
+    tf2_geometry_msgs
+    tf2_ros
+    lifecycle_msgs
 )
 
 include_directories(include ${ZMQ_INCLUDE_DIRS})
 
-add_library(turn_bt_node SHARED src/pack1/Turn.cpp)
-add_library(move_bt_node SHARED src/pack1/Move.cpp)
+add_library(turn_bt_node SHARED src/thief/Turn.cpp)
+add_library(move_bt_node SHARED src/thief/Move.cpp)
 
 list(APPEND plugin_libs
   turn_bt_node
@@ -44,13 +56,13 @@ foreach(bt_plugin ${plugin_libs})
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 
-add_executable(pack1 src/bt_thief_main.cpp)
-ament_target_dependencies(pack1 ${dependencies})
-target_link_libraries(pack1 ${ZMQ_LIBRARIES})
+add_executable(thief src/bt_thief_main.cpp)
+ament_target_dependencies(thief ${dependencies})
+target_link_libraries(thief ${ZMQ_LIBRARIES})
 
 install(TARGETS
   ${plugin_libs}
-  pack1
+  thief
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
