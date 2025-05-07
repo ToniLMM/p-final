@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Repeat num_cycles="4">
+            <Sequence>
+                <Action ID="GetWaypoint" waypoint="{wp}" wp_id="next"/>
+                <Action ID="Move" goal="{wp}"/>
+            </Sequence>
+        </Repeat>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="GetWaypoint">
+            <output_port default="{wp}" name="waypoint"/>
+            <input_port default="next" name="wp_id"/>
+        </Action>
+        <Action ID="Move">
+            <input_port default="{wp}" name="goal"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

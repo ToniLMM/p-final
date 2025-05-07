@@ -24,10 +24,6 @@ def generate_launch_description():
         executable='thief',
         name='thief',
         output='screen',
-        remappings=[
-            ('/output_vel', '/cmd_vel'),
-            ('/input_scan', '/scan_filtered')
-        ],
         parameters=[
             {'use_sim_time': True}
         ])

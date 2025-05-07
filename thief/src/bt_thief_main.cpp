@@ -34,11 +34,14 @@ int main(int argc, char * argv[])
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
+  // factory.registerFromPlugin(loader.getOSName("move_bt_node"));
+  // factory.registerFromPlugin(loader.getOSName("getwp_bt_node"));
+    factory.registerFromPlugin(loader.getOSName("move2_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("getwp2_bt_node"));
   factory.registerFromPlugin(loader.getOSName("turn_bt_node"));
-  factory.registerFromPlugin(loader.getOSName("move_bt_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("thief");
-  std::string xml_file = pkgpath + "/behavior_tree_xml/thief.xml";
+  std::string xml_file = pkgpath + "/behavior_tree_xml/thief_tree2.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);
@@ -48,11 +51,19 @@ int main(int argc, char * argv[])
 
   rclcpp::Rate rate(10);
 
-  bool finish = false;
-  while (!finish && rclcpp::ok()) {
-    finish = tree.rootNode()->executeTick() != BT::NodeStatus::RUNNING;
+  // bool finish = false;
+  // while (!finish && rclcpp::ok()) {
+  //   finish = tree.rootNode()->executeTick() != BT::NodeStatus::RUNNING;
 
+  while (rclcpp::ok()) {
+    BT::NodeStatus status = tree.rootNode()->executeTick();
     rclcpp::spin_some(node);
+    
+    if (status == BT::NodeStatus::SUCCESS) {
+      RCLCPP_INFO(node->get_logger(),
+                  "¡ReactiveSequence completó con SUCCESS! Saliendo.");
+      break;
+    }
     rate.sleep();
   }
 

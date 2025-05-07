@@ -16,6 +16,7 @@ find_package(yolo_msgs REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(lifecycle_msgs REQUIRED)
+# find_package(kobuki_msgs REQUIRED)
 
 find_package(ZMQ)
 if(ZMQ_FOUND)
@@ -39,16 +40,23 @@ set(dependencies
     tf2_geometry_msgs
     tf2_ros
     lifecycle_msgs
+    # kobuki_msgs
 )
 
 include_directories(include ${ZMQ_INCLUDE_DIRS})
 
 add_library(turn_bt_node SHARED src/thief/Turn.cpp)
+add_library(getwp_bt_node SHARED src/thief/GetWaypoint.cpp)
 add_library(move_bt_node SHARED src/thief/Move.cpp)
+add_library(move2_bt_node SHARED src/thief/Move2.cpp)
+add_library(getwp2_bt_node SHARED src/thief/GetWaypoint2.cpp)
 
 list(APPEND plugin_libs
+  getwp_bt_node
   turn_bt_node
   move_bt_node
+  move2_bt_node
+  getwp2_bt_node
 )
 
 foreach(bt_plugin ${plugin_libs})

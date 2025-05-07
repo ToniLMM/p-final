@@ -14,64 +14,49 @@
 
 #include <string>
 #include <iostream>
-#include <vector>
 
-#include "thief/GetWaypoint.hpp"
-
+#include "thief/GetWaypoint2.hpp"
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
-#include "geometry_msgs/msg/pose_stamped.hpp"
-
+#include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace thief
 {
 
-GetWaypoint::GetWaypoint(
+
+using namespace std::chrono_literals;
+
+GetWaypoint2::GetWaypoint2(
   const std::string & xml_tag_name,
   const BT::NodeConfiguration & conf)
 : BT::ActionNodeBase(xml_tag_name, conf)
 {
-  rclcpp::Node::SharedPtr node;
-  config().blackboard->get("node", node);
-
-  geometry_msgs::msg::PoseStamped wp;
-  wp.header.frame_id = "map";
-  wp.pose.orientation.w = 1.0;
-
-
-  // entrance
-  wp.pose.position.x = 0.0637;
-  wp.pose.position.y = -1.2216;
-  waypoints_.push_back(wp);
-
-  // wp1
-  wp.pose.position.x = -1.8498;
-  wp.pose.position.y = -0.7649;
-  waypoints_.push_back(wp);
-
-  // wp2
-  wp.pose.position.x = 6.2142;
-  wp.pose.position.y = 4.8762;
-  waypoints_.push_back(wp);
-
-  // wp3
-  wp.pose.position.x = 5.3175;
-  wp.pose.position.y = -1.2676;
-  waypoints_.push_back(wp);
+  config().blackboard->get("node", node_);
 }
 
-void
-GetWaypoint::halt()
-{
-}
+// void
+// GetWaypoint2::halt()
+// {
+// }
 
 BT::NodeStatus
-GetWaypoint::tick()
+GetWaypoint2::tick()
 {
-  setOutput("waypoint", waypoints_[current_++]);
-  current_ = current_ % waypoints_.size();
-  return BT::NodeStatus::SUCCESS;
+  if (status() == BT::NodeStatus::IDLE) {
+    start_time_ = node_->now();
+  }
+
+  auto elapsed = node_->now() - start_time_;
+
+  // Si no ha pasado 3s, seguimos ejecutando
+  if (elapsed < 3s) {
+    RCLCPP_INFO(node_->get_logger(), "GETTING WAYPOINT..."); 
+    return BT::NodeStatus::RUNNING;
+  }
+  else{
+    return BT::NodeStatus::SUCCESS;
+  }
 }
 
 }  // namespace thief
@@ -79,5 +64,5 @@ GetWaypoint::tick()
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<thief::GetWaypoint>("GetWaypoint");
+  factory.registerNodeType<thief::GetWaypoint2>("GetWaypoint2");
 }

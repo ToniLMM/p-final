@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <ReactiveSequence>
+            <RetryUntilSuccessful num_attempts="4">
+                <Inverter>
+                    <Sequence>
+                        <Action ID="GetWaypoint2"/>
+                        <Action ID="Move2"/>
+                        <Inverter>
+                            <Action ID="Turn"/>
+                        </Inverter>
+                    </Sequence>
+                </Inverter>
+            </RetryUntilSuccessful>
+            <Sequence>
+                <Action ID="GetWaypoint2"/>
+                <Action ID="Move2"/>
+            </Sequence>
+        </ReactiveSequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="GetWaypoint">
+            <output_port default="{wp}" name="waypoint"/>
+            <input_port default="next" name="wp_id"/>
+        </Action>
+        <Action ID="GetWaypoint2"/>
+        <Action ID="Move">
+            <input_port default="{wp}" name="goal"/>
+        </Action>
+        <Action ID="Move2"/>
+        <Action ID="Turn"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

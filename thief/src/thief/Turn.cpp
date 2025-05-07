@@ -36,8 +36,8 @@ Turn::Turn(
 {
   config().blackboard->get("node", node_);
 
-  vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("/output_vel", 100);
-  sound_pub_ = node_->create_publisher<kobuki_msgs::msg::Sound>("/commands/sound", 10);
+  vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 100);
+  // sound_pub_ = node_->create_publisher<kobuki_msgs::msg::Sound>("/commands/sound", 10);
 
   detections_subscription_ = node_->create_subscription<yolo_msgs::msg::DetectionArray>(
     "/yolo/detections", 10, std::bind(&Turn::detectionsCallback, this, std::placeholders::_1));
@@ -54,13 +54,13 @@ Turn::halt()
 {
 }
 
-void
-Turn::playSound(uint8_t sound_type)
-{
-  kobuki_msgs::msg::Sound sound_msg;
-  sound_msg.value = sound_type;
-  sound_pub_->publish(sound_msg);
-}
+// void
+// Turn::playSound(uint8_t sound_type)
+// {
+//   kobuki_msgs::msg::Sound sound_msg;
+//   sound_msg.value = sound_type;
+//   sound_pub_->publish(sound_msg);
+// }
 
 BT::NodeStatus
 Turn::tick()
@@ -72,41 +72,48 @@ Turn::tick()
 
   auto elapsed = node_->now() - start_time_;
 
-  // Si no ha pasado 3s, seguimos girando
-  if (elapsed < 3s) {
+  // Si no ha pasado 8s, seguimos girando
+  if (elapsed < 8s) {
     geometry_msgs::msg::Twist vel_msgs;
     vel_msgs.angular.z = 0.5;
     vel_pub_->publish(vel_msgs);
+    RCLCPP_INFO(node_->get_logger(), "TURNING...");
 
     // Procesamiento de las detecciones de yolo
     for (auto & det : latest_detections_) {
       // ID de person = 0
-      if (det.class_id == 0) {
-        RCLCPP_INFO(node_->get_logger(), "¡PERSON DETECTED!");
-        playSound(kobuki_msgs::msg::Sound::ERROR);
+      // if (det.class_id == 0) {
+      //   vel_msgs.angular.z = 0.0;
+      //   vel_pub_->publish(vel_msgs);
+      //   RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");
+      //   // playSound(kobuki_msgs::msg::Sound::ERROR);
           
-        return BT::NodeStatus::SUCCESS;
-      }
+      //   return BT::NodeStatus::SUCCESS;
+      // }
       // ID de pelota = 32
       if (det.class_id == 32) {
-        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        playSound(kobuki_msgs::msg::Sound::BUTTON); 
+        vel_msgs.angular.z = 0.0;
+        vel_pub_->publish(vel_msgs);
+        RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
+        // playSound(kobuki_msgs::msg::Sound::BUTTON); 
+
+        return BT::NodeStatus::SUCCESS;
       }
-      // ID de mochila = 26
-      if (det.class_id == 26) {
-        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        playSound(kobuki_msgs::msg::Sound::BUTTON); 
-      }
-      // ID de ordenador = 63
-      if (det.class_id == 63) {
-        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        playSound(kobuki_msgs::msg::Sound::BUTTON); 
-      }
-      // ID de botella = 39
-      if (det.class_id == 39 ) {
-        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        playSound(kobuki_msgs::msg::Sound::BUTTON); 
-      }
+      // // ID de mochila = 26
+      // if (det.class_id == 26) {
+      //   RCLCPP_INFO(node_->get_logger(), "BAG DETECTED!");
+      //   // playSound(kobuki_msgs::msg::Sound::BUTTON); 
+      // }
+      // // ID de ordenador = 63
+      // if (det.class_id == 63) {
+      //   RCLCPP_INFO(node_->get_logger(), "LAPTOP DETECTED!");
+      //   // playSound(kobuki_msgs::msg::Sound::BUTTON); 
+      // }
+      // // ID de botella = 39
+      // if (det.class_id == 39 ) {
+      //   RCLCPP_INFO(node_->get_logger(), "BOTTLE DETECTED!");
+      //   // playSound(kobuki_msgs::msg::Sound::BUTTON); 
+      // }
     }
 
     return BT::NodeStatus::RUNNING;

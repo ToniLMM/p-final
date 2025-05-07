@@ -96,7 +96,7 @@ private:
 
     // 2) Si llevo menos de 3s, sigo girando
     auto elapsed = now() - start_time_;
-    if (elapsed < 30s) {
+    if (elapsed < 8s) {
       geometry_msgs::msg::Twist vel;
       RCLCPP_INFO(get_logger(), "GIRANDO ...");
       vel.angular.z = 0.5;
