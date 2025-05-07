@@ -25,6 +25,8 @@
 namespace thief
 {
 
+// Este nodo devuelve SUCCESS si detecta una persona
+
 using namespace std::chrono_literals;
 
 Turn::Turn(
@@ -35,6 +37,15 @@ Turn::Turn(
   config().blackboard->get("node", node_);
 
   vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("/output_vel", 100);
+
+  detections_subscription_ = node_->create_subscription<yolo_msgs::msg::DetectionArray>(
+    "/yolo/detections", 10, std::bind(&Turn::detectionsCallback, this, std::placeholders::_1));
+}
+
+void Turn::detectionsCallback(const yolo_msgs::msg::DetectionArray::SharedPtr msg)
+{
+  // Guardamos sólo las detecciones, para consultarlas en tick()
+  latest_detections_ = msg->detections;
 }
 
 void
@@ -57,6 +68,11 @@ Turn::tick()
 
   if (elapsed < 3s) {
     RCLCPP_INFO(node_->get_logger(), "Turning");
+    
+    // Procesamiento de las detecciones de yolo
+
+
+
     return BT::NodeStatus::RUNNING;
   } else {
     return BT::NodeStatus::SUCCESS;

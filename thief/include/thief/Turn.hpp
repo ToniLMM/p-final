@@ -45,6 +45,7 @@ private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Time start_time_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
+  rclcpp::Subscription<yolo_msgs::msg::DetectionArray>::SharedPtr yolo_subscription_;
 };
 
 }  // namespace thief
