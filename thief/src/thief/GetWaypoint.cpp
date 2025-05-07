@@ -35,11 +35,29 @@ GetWaypoint::GetWaypoint(
   rclcpp::Node::SharedPtr node;
   config().blackboard->get("node", node);
 
-  wp_.header.frame_id = "map";
-  wp_.pose.orientation.w = 1.0;
+  wp.header.frame_id = "map";
+  wp.pose.orientation.w = 1.0;
 
-  wp_.pose.position.x = 3.67;
-  wp_.pose.position.y = -0.24;
+
+  // entrance
+  wp.pose.position.x = 0.0637;
+  wp.pose.position.y = -1.2216;
+  waypoints_.push_back(wp);
+
+  // wp1
+  wp.pose.position.x = -1.8498;
+  wp.pose.position.y = -0.7649;
+  waypoints_.push_back(wp);
+
+  // wp2
+  wp.pose.position.x = 6.2142;
+  wp.pose.position.y = 4.8762;
+  waypoints_.push_back(wp);
+
+  // wp3
+  wp.pose.position.x = 5.3175;
+  wp.pose.position.y = -1.2676;
+  waypoints_.push_back(wp);
 }
 
 void
@@ -50,7 +68,8 @@ GetWaypoint::halt()
 BT::NodeStatus
 GetWaypoint::tick()
 {
-  setOutput("waypoint", wp_);
+  setOutput("waypoint", waypoints_[current_++]);
+  current_ = current_ % waypoints_.size();
   return BT::NodeStatus::SUCCESS;
 }
 
