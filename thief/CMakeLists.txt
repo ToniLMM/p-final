@@ -16,7 +16,7 @@ find_package(yolo_msgs REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(lifecycle_msgs REQUIRED)
-# find_package(kobuki_msgs REQUIRED)
+find_package(kobuki_ros_interfaces REQUIRED)
 
 find_package(ZMQ)
 if(ZMQ_FOUND)
@@ -40,7 +40,7 @@ set(dependencies
     tf2_geometry_msgs
     tf2_ros
     lifecycle_msgs
-    # kobuki_msgs
+    kobuki_ros_interfaces
 )
 
 include_directories(include ${ZMQ_INCLUDE_DIRS})

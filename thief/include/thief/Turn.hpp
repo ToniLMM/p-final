@@ -20,7 +20,7 @@
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "yolo_msgs/msg/detection_array.hpp"
-// #include "kobuki_msgs/msg/sound.hpp"
+#include "kobuki_ros_interfaces/msg/sound.hpp"
 
 
 #include "geometry_msgs/msg/twist.hpp"
@@ -52,10 +52,14 @@ private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Time start_time_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
-  // rclcpp::Publisher<kobuki_msgs::msg::Sound>::SharedPtr sound_pub_;
+  rclcpp::Publisher<kobuki_ros_interfaces::msg::Sound>::SharedPtr sound_;
   rclcpp::Subscription<yolo_msgs::msg::DetectionArray>::SharedPtr detections_subscription_;
 
   std::vector<yolo_msgs::msg::Detection> latest_detections_;
+  kobuki_ros_interfaces::msg::Sound sonido1_;
+  kobuki_ros_interfaces::msg::Sound sonido2_;
+  kobuki_ros_interfaces::msg::Sound sonido3_;
+  kobuki_ros_interfaces::msg::Sound sonido4_;
 };
 
 }  // namespace thief

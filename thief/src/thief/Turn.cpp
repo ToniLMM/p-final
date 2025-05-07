@@ -37,10 +37,15 @@ Turn::Turn(
   config().blackboard->get("node", node_);
 
   vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 100);
-  // sound_pub_ = node_->create_publisher<kobuki_msgs::msg::Sound>("/commands/sound", 10);
+  sound_ = node_->create_publisher<kobuki_ros_interfaces::msg::Sound>("commands/sound", 10);
 
   detections_subscription_ = node_->create_subscription<yolo_msgs::msg::DetectionArray>(
     "/yolo/detections", 10, std::bind(&Turn::detectionsCallback, this, std::placeholders::_1));
+
+  sonido1_.value = 5;
+  sonido2_.value = 6;
+  sonido3_.value = 3;
+  sonido4_.value = 4;
 }
 
 void Turn::detectionsCallback(const yolo_msgs::msg::DetectionArray::SharedPtr msg)
