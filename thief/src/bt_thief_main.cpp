@@ -41,7 +41,7 @@ int main(int argc, char * argv[])
   factory.registerFromPlugin(loader.getOSName("turn_bt_node"));
 
   std::string pkgpath = ament_index_cpp::get_package_share_directory("thief");
-  std::string xml_file = pkgpath + "/behavior_tree_xml/thief_tree2.xml";
+  std::string xml_file = pkgpath + "/behavior_tree_xml/thief.xml";
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("node", node);

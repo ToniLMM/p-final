@@ -24,6 +24,7 @@
 namespace thief
 {
 
+int thief::GetWaypoint2::current_ = 0;
 
 using namespace std::chrono_literals;
 
@@ -33,6 +34,31 @@ GetWaypoint2::GetWaypoint2(
 : BT::ActionNodeBase(xml_tag_name, conf)
 {
   config().blackboard->get("node", node_);
+
+  geometry_msgs::msg::PoseStamped wp;
+  wp.header.frame_id = "map";
+  wp.pose.orientation.w = 1.0;
+
+  // entrance
+  wp.pose.position.x = 0.0637;
+  wp.pose.position.y = -1.2216;
+  waypoints_.push_back(wp);
+
+  // wp1
+  wp.pose.position.x = -1.8498;
+  wp.pose.position.y = -0.7649;
+  waypoints_.push_back(wp);
+
+  // wp2
+  wp.pose.position.x = 6.2142;
+  wp.pose.position.y = 4.8762;
+  waypoints_.push_back(wp);
+
+  // wp3
+  wp.pose.position.x = 5.3175;
+  wp.pose.position.y = -1.2676;
+  waypoints_.push_back(wp);
+  
 }
 
 // void
@@ -54,7 +80,9 @@ GetWaypoint2::tick()
     RCLCPP_INFO(node_->get_logger(), "GETTING WAYPOINT..."); 
     return BT::NodeStatus::RUNNING;
   }
-  else{
+  else{ 
+    setOutput("waypoint", waypoints_[current_++]);
+    current_ = current_ % waypoints_.size();
     return BT::NodeStatus::SUCCESS;
   }
 }

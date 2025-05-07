@@ -42,20 +42,38 @@ Move2::Move2(
 
 BT::NodeStatus
 Move2::tick()
-{
-  if (status() == BT::NodeStatus::IDLE) {
-    start_time_ = node_->now();
-  }
+{ 
+  geometry_msgs::msg::PoseStamped goal;
+  if (getInput("goal", goal)) {
+    const auto & p = goal.pose.position;
+    const auto & o = goal.pose.orientation;
+    RCLCPP_INFO(
+      node_->get_logger(),
+      "[Move2] Recibido goal:\n"
+      "  Pos → x: %.3f, y: %.3f, z: %.3f\n"
+      "  Ori → x: %.3f, y: %.3f, z: %.3f, w: %.3f",
+      p.x, p.y, p.z,
+      o.x, o.y, o.z, o.w);
 
-  auto elapsed = node_->now() - start_time_;
+    if (status() == BT::NodeStatus::IDLE) {
+      start_time_ = node_->now();
+    }
 
-  // Si no ha pasado 3s, seguimos girando
-  if (elapsed < 3s) {
-    RCLCPP_INFO(node_->get_logger(), "MOVING..."); 
-    return BT::NodeStatus::RUNNING;
+    auto elapsed = node_->now() - start_time_;
+
+    // Si no ha pasado 3s, seguimos girando
+    if (elapsed < 3s) {
+      RCLCPP_INFO(node_->get_logger(), "MOVING..."); 
+      return BT::NodeStatus::RUNNING;
+    }
+    else{
+      return BT::NodeStatus::SUCCESS;
+    }
   }
   else{
-    return BT::NodeStatus::SUCCESS;
+    RCLCPP_ERROR(node_->get_logger(),
+                  "[Move2] Falta el input “goal”");
+    return BT::NodeStatus::FAILURE;
   }
 }
 

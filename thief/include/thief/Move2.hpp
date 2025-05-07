@@ -44,7 +44,7 @@ public:
   {
     return BT::PortsList(
       {
-        // BT::InputPort<geometry_msgs::msg::PoseStamped>("goal")
+        BT::InputPort<geometry_msgs::msg::PoseStamped>("goal")
       });
   }
 

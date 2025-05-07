@@ -44,13 +44,16 @@ public:
   {
     return BT::PortsList(
       {
-        // BT::InputPort<geometry_msgs::msg::PoseStamped>("goal")
+        BT::InputPort<std::string>("wp_id"),
+        BT::OutputPort<geometry_msgs::msg::PoseStamped>("waypoint")
       });
   }
 
 private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Time start_time_;
+  std::vector<geometry_msgs::msg::PoseStamped> waypoints_;
+  static int current_;
 };
 
 
