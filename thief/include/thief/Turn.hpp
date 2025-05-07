@@ -19,6 +19,8 @@
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
+#include "yolo_msgs/msg/detection_array.hpp"
+
 
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
@@ -36,6 +38,8 @@ public:
   void halt();
   BT::NodeStatus tick();
 
+  void detectionsCallback(const yolo_msgs::msg::DetectionArray::SharedPtr msg);
+
   static BT::PortsList providedPorts()
   {
     return BT::PortsList({});
@@ -45,7 +49,9 @@ private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Time start_time_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
-  rclcpp::Subscription<yolo_msgs::msg::DetectionArray>::SharedPtr yolo_subscription_;
+  rclcpp::Subscription<yolo_msgs::msg::DetectionArray>::SharedPtr detections_subscription_;
+
+  std::vector<yolo_msgs::msg::Detection> latest_detections_;
 };
 
 }  // namespace thief

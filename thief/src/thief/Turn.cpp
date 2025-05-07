@@ -58,24 +58,50 @@ Turn::tick()
 {
   if (status() == BT::NodeStatus::IDLE) {
     start_time_ = node_->now();
+    latest_detections_.clear();
   }
-
-  geometry_msgs::msg::Twist vel_msgs;
-  vel_msgs.angular.z = 0.5;
-  vel_pub_->publish(vel_msgs);
 
   auto elapsed = node_->now() - start_time_;
 
+  // Si no ha pasado 3s, seguimos girando
   if (elapsed < 3s) {
-    RCLCPP_INFO(node_->get_logger(), "Turning");
-    
+    geometry_msgs::msg::Twist vel_msgs;
+    vel_msgs.angular.z = 0.5;
+    vel_pub_->publish(vel_msgs);
+
     // Procesamiento de las detecciones de yolo
-
-
+    for (auto & det : latest_detections_) {
+      // ID de person = 0
+      if (det.class_id == 0) {
+        RCLCPP_INFO(node_->get_logger(), "¡PERSON DETECTED!");      
+        return BT::NodeStatus::SUCCESS;
+      }
+      // ID de pelota = 32
+      if (det.class_id == 32) {
+        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
+        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+      }
+      // ID de mochila = 26
+      if (det.class_id == 26) {
+        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
+        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+      }
+      // ID de ordenador = 63
+      if (det.class_id == 63) {
+        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
+        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+      }
+      // ID de botella = 39
+      if (det.class_id == 39 ) {
+        RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
+        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+      }
+    }
 
     return BT::NodeStatus::RUNNING;
-  } else {
-    return BT::NodeStatus::SUCCESS;
+  }
+  else{
+    return BT::NodeStatus::FAILURE;
   }
 }
 
