@@ -20,6 +20,7 @@
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "yolo_msgs/msg/detection_array.hpp"
+#include "kobuki_msgs/msg/sound.hpp"
 
 
 #include "geometry_msgs/msg/twist.hpp"
@@ -40,6 +41,8 @@ public:
 
   void detectionsCallback(const yolo_msgs::msg::DetectionArray::SharedPtr msg);
 
+  void playSound(uint8_t sound_type);
+
   static BT::PortsList providedPorts()
   {
     return BT::PortsList({});
@@ -49,6 +52,7 @@ private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Time start_time_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
+  rclcpp::Publisher<kobuki_msgs::msg::Sound>::SharedPtr sound_pub_;
   rclcpp::Subscription<yolo_msgs::msg::DetectionArray>::SharedPtr detections_subscription_;
 
   std::vector<yolo_msgs::msg::Detection> latest_detections_;

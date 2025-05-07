@@ -37,6 +37,7 @@ Turn::Turn(
   config().blackboard->get("node", node_);
 
   vel_pub_ = node_->create_publisher<geometry_msgs::msg::Twist>("/output_vel", 100);
+  sound_pub_ = node_->create_publisher<kobuki_msgs::msg::Sound>("/commands/sound", 10);
 
   detections_subscription_ = node_->create_subscription<yolo_msgs::msg::DetectionArray>(
     "/yolo/detections", 10, std::bind(&Turn::detectionsCallback, this, std::placeholders::_1));
@@ -51,6 +52,14 @@ void Turn::detectionsCallback(const yolo_msgs::msg::DetectionArray::SharedPtr ms
 void
 Turn::halt()
 {
+}
+
+void
+Turn::playSound(uint8_t sound_type)
+{
+  kobuki_msgs::msg::Sound sound_msg;
+  sound_msg.value = sound_type;
+  sound_pub_->publish(sound_msg);
 }
 
 BT::NodeStatus
@@ -73,28 +82,30 @@ Turn::tick()
     for (auto & det : latest_detections_) {
       // ID de person = 0
       if (det.class_id == 0) {
-        RCLCPP_INFO(node_->get_logger(), "¡PERSON DETECTED!");      
+        RCLCPP_INFO(node_->get_logger(), "¡PERSON DETECTED!");
+        playSound(kobuki_msgs::msg::Sound::ERROR);
+          
         return BT::NodeStatus::SUCCESS;
       }
       // ID de pelota = 32
       if (det.class_id == 32) {
         RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+        playSound(kobuki_msgs::msg::Sound::BUTTON); 
       }
       // ID de mochila = 26
       if (det.class_id == 26) {
         RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+        playSound(kobuki_msgs::msg::Sound::BUTTON); 
       }
       // ID de ordenador = 63
       if (det.class_id == 63) {
         RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+        playSound(kobuki_msgs::msg::Sound::BUTTON); 
       }
       // ID de botella = 39
       if (det.class_id == 39 ) {
         RCLCPP_INFO(node_->get_logger(), "Pelota encontrada, emito sonido");
-        // Aquí puedes llamar a tu publisher de sonido o ejecutar la lógica que quieras
+        playSound(kobuki_msgs::msg::Sound::BUTTON); 
       }
     }
 
