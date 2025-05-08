@@ -6,8 +6,8 @@
             <RetryUntilSuccessful num_attempts="4">
                 <Inverter>
                     <Sequence>
-                        <Action ID="GetWaypoint2" waypoint="{wp}" wp_id="next"/>
-                        <Action ID="Move2" goal="{wp}"/>
+                        <Action ID="GetWaypoint" waypoint="{wp}" wp_id="next"/>
+                        <Action ID="Move" goal="{wp}"/>
                         <Inverter>
                             <Action ID="Turn"/>
                         </Inverter>
@@ -15,18 +15,18 @@
                 </Inverter>
             </RetryUntilSuccessful>
             <Sequence>
-                <Action ID="GetWaypoint2" waypoint="{wp}" wp_id="next"/>
-                <Action ID="Move2" goal="{wp}"/>
+                <Action ID="GetWaypoint" waypoint="{wp}" wp_id="next"/>
+                <Action ID="Move" goal="{wp}"/>
             </Sequence>
         </Sequence>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
-        <Action ID="GetWaypoint2">
+        <Action ID="GetWaypoint">
             <output_port default="{wp}" name="waypoint"/>
             <input_port default="next" name="wp_id"/>
         </Action>
-        <Action ID="Move2">
+        <Action ID="Move">
             <input_port default="{wp}" name="goal"/>
         </Action>
         <Action ID="Turn"/>
