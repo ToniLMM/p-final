@@ -15,11 +15,15 @@
 
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument, LogInfo, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.substitutions import FindPackageShare
+import os
 
 
 def generate_launch_description():
 
-    bumpgo_cmd = Node(
+    thief_cmd = Node(
         package='thief',
         executable='thief',
         name='thief',
@@ -27,7 +31,19 @@ def generate_launch_description():
         parameters=[
             {'use_sim_time': True}
         ])
+    
+    yolo_launch_file = os.path.join(
+        FindPackageShare('yolo_bringup').find('yolo_bringup'), 'launch', 'yolo.launch.py')
+
+    yolo_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(yolo_launch_file),
+        launch_arguments={
+            'model': 'yolov8m-seg.pt',
+            'input_image_topic': '/rgb/image_raw'
+        }.items()
+    )
 
     ld = LaunchDescription()
-    ld.add_action(bumpgo_cmd)
+    ld.add_action(thief_cmd)
+    ld.add_action(yolo_cmd)
     return ld
