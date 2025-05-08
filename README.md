@@ -67,4 +67,21 @@ ros2 launch thief thief.launch.py
 
 ## Funcionamiento
 
+Para este codigo hemos necesitado 3 nodos: GetWaypoint, Move y Turn
+
+### GetWaypoint
+
+
+
+### Move
+
+
+
+### Turn
+
+
+
 ## Video Final
+
+https://github.com/user-attachments/assets/ce09696b-f18b-4316-905b-d7908748665f
+
