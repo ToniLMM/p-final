@@ -41,7 +41,7 @@ public:
 
   void detectionsCallback(const yolo_msgs::msg::DetectionArray::SharedPtr msg);
 
-  // void playSound(uint8_t sound_type);
+  void playSound(uint8_t sound_type);
 
   static BT::PortsList providedPorts()
   {
@@ -60,6 +60,7 @@ private:
   kobuki_ros_interfaces::msg::Sound sonido2_;
   kobuki_ros_interfaces::msg::Sound sonido3_;
   kobuki_ros_interfaces::msg::Sound sonido4_;
+  kobuki_ros_interfaces::msg::Sound sonido5_;
 };
 
 }  // namespace thief

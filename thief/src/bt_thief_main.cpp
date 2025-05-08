@@ -51,19 +51,19 @@ int main(int argc, char * argv[])
 
   rclcpp::Rate rate(10);
 
-  // bool finish = false;
-  // while (!finish && rclcpp::ok()) {
-  //   finish = tree.rootNode()->executeTick() != BT::NodeStatus::RUNNING;
+  bool finish = false;
+  while (!finish && rclcpp::ok()) {
+    finish = tree.rootNode()->executeTick() != BT::NodeStatus::RUNNING;
 
-  while (rclcpp::ok()) {
-    BT::NodeStatus status = tree.rootNode()->executeTick();
+  // while (rclcpp::ok()) {
+  //   BT::NodeStatus status = tree.rootNode()->executeTick();
     rclcpp::spin_some(node);
     
-    if (status == BT::NodeStatus::SUCCESS) {
-      RCLCPP_INFO(node->get_logger(),
-                  "¡ReactiveSequence completó con SUCCESS! Saliendo.");
-      break;
-    }
+    // if (status == BT::NodeStatus::SUCCESS) {
+    //   RCLCPP_INFO(node->get_logger(),
+    //               "¡ReactiveSequence completó con SUCCESS! Saliendo.");
+    //   break;
+    // }
     rate.sleep();
   }
 
