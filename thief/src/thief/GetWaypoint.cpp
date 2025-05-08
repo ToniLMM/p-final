@@ -43,23 +43,23 @@ GetWaypoint::GetWaypoint(
 
 
   // entrance
-  wp.pose.position.x = 0.0637;
-  wp.pose.position.y = -1.2216;
+  wp.pose.position.x = 0.3541;
+  wp.pose.position.y = -1.7582;
   waypoints_.push_back(wp);
 
   // wp1
-  wp.pose.position.x = -1.8498;
-  wp.pose.position.y = -0.7649;
+  wp.pose.position.x = 0.9891;
+  wp.pose.position.y = 2.1908;
   waypoints_.push_back(wp);
 
   // wp2
-  wp.pose.position.x = 6.2142;
-  wp.pose.position.y = 4.8762;
+  wp.pose.position.x = 6.1713;
+  wp.pose.position.y = 3.6085;
   waypoints_.push_back(wp);
 
   // wp3
-  wp.pose.position.x = 5.3175;
-  wp.pose.position.y = -1.2676;
+  wp.pose.position.x = 3.9258;
+  wp.pose.position.y = 0.5454;
   waypoints_.push_back(wp);
 }
 
