@@ -102,8 +102,6 @@ Turn::tick()
         // vel_pub_->publish(vel_msgs);
         RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
         sound_->publish(sonido2_);
-
-        return BT::NodeStatus::SUCCESS;
       }
       // ID de mochila = 26
       if (det.class_id == 26) {
