@@ -47,6 +47,7 @@ public:
 private:
   std::vector<geometry_msgs::msg::PoseStamped> waypoints_;
   static int current_;
+  geometry_msgs::msg::PoseStamped base;
 };
 
 }  // namespace thief

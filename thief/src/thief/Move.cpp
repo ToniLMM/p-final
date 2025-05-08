@@ -33,6 +33,7 @@ Move::on_tick()
   getInput("goal", goal);
 
   goal_.pose = goal;
+  RCLCPP_INFO(node_->get_logger(), "MOVING ...");
 }
 
 BT::NodeStatus

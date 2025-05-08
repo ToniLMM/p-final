@@ -15,7 +15,7 @@
                 </Inverter>
             </RetryUntilSuccessful>
             <Sequence>
-                <Action ID="GetWaypoint" waypoint="{wp}" wp_id="next"/>
+                <Action ID="GetWaypoint" waypoint="{wp}" wp_id="base"/>
                 <Action ID="Move" goal="{wp}"/>
             </Sequence>
         </Sequence>

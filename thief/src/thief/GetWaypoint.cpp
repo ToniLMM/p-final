@@ -46,6 +46,7 @@ GetWaypoint::GetWaypoint(
   wp.pose.position.x = 0.3541;
   wp.pose.position.y = -1.7582;
   waypoints_.push_back(wp);
+  base = wp;
 
   // wp1
   wp.pose.position.x = 0.9891;
@@ -71,8 +72,16 @@ GetWaypoint::halt()
 BT::NodeStatus
 GetWaypoint::tick()
 {
-  setOutput("waypoint", waypoints_[current_++]);
-  current_ = current_ % waypoints_.size();
+  std::string id;
+  getInput("wp_id", id);
+
+  if (id == "next"){
+    setOutput("waypoint", waypoints_[current_++]);
+    current_ = current_ % waypoints_.size();
+  } else if (id == "base"){
+    setOutput("waypoint", base);
+  }
+
   return BT::NodeStatus::SUCCESS;
 }
 
