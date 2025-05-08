@@ -1,5 +1,8 @@
 # Proyecto final: Robot Ladrón
 
+![image](https://github.com/user-attachments/assets/375b8c13-2f68-466f-80bd-9c7d6210fcd3)
+
+
 ## Introducción
 
 En esta practica vamos a hacer uso del Kobuki para simular el comportamiento de un robot ladrón, el cuál cuando detecta los objetos marcados del yolo hace sonidos pero si detecta una persona, este huye a la entrada de nuevo.
