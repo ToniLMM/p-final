@@ -71,10 +71,25 @@ Para este codigo hemos necesitado 3 nodos: GetWaypoint, Move y Turn
 
 ### GetWaypoint
 
+Este nodo, usado en el Behavior Tree, selecciona y devuelve un waypoint en el mapa según una entrada:
+
+  - Si recibe wp_id = "next", devuelve el siguiente waypoint en una lista circular.
+  - Si recibe wp_id = "base", devuelve una posición fija llamada "base" (entrada de la casa).
+
+![image](https://github.com/user-attachments/assets/6a2548f4-3ccd-4dc8-a7ef-6f5a75601b37)
 
 
 ### Move
 
+Este nodo, usado en el Behavior Tree, envía una orden de navegación al sistema NavigateToPose de ROS 2:
+
+ 1. Lee un objetivo goal del árbol (un PoseStamped).
+
+ 2. Envía ese objetivo como acción de navegación.
+
+ 3. Informa si la navegación fue exitosa.
+
+![image](https://github.com/user-attachments/assets/f1f9a84c-6a95-428c-ba94-9400e0c9d25a)
 
 
 ### Turn
