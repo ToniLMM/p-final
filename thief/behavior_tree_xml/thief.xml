@@ -3,7 +3,7 @@
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
         <Sequence>
-            <RetryUntilSuccessful num_attempts="4">
+            <RetryUntilSuccessful num_attempts="5">
                 <Inverter>
                     <Sequence>
                         <Action ID="GetWaypoint" waypoint="{wp}" wp_id="next"/>

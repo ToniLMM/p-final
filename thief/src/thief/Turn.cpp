@@ -62,14 +62,6 @@ Turn::halt()
 {
 }
 
-// void
-// Turn::playSound(uint8_t sound_type)
-// {
-//   kobuki_msgs::msg::Sound sound_msg;
-//   sound_msg.value = sound_type;
-//   sound_pub_->publish(sound_msg);
-// }
-
 BT::NodeStatus
 Turn::tick()
 {
@@ -80,11 +72,9 @@ Turn::tick()
 
   auto current_time = clock_.now();
   auto elapsed = current_time - start_time_;
-  RCLCPP_INFO(node_->get_logger(), "Elapsed time: %.2f seconds", elapsed.seconds());
 
   // Si no ha pasado 8s, seguimos girando
   if (elapsed.seconds() < 8.0) {
-    RCLCPP_INFO(node_->get_logger(), "Current time: %.2f seconds", current_time.seconds());
     geometry_msgs::msg::Twist vel_msgs;
     vel_msgs.angular.z = 0.5;
     vel_pub_->publish(vel_msgs);
@@ -94,19 +84,19 @@ Turn::tick()
     for (auto & det : latest_detections_) {
       // ID de person = 0
       if (det.class_id == 0) {
-        // vel_msgs.angular.z = 0.0;
-        // vel_pub_->publish(vel_msgs);
-        sound_->publish(sonido5_);
+        vel_msgs.angular.z = 0.0;
+        vel_pub_->publish(vel_msgs);
+        sound_->publish(sonido1_);
         RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");          
-        // return BT::NodeStatus::SUCCESS;
+        return BT::NodeStatus::SUCCESS;
       }
       // ID de pelota = 32
       if (det.class_id == 32) {
-        vel_msgs.angular.z = 0.0;
-        vel_pub_->publish(vel_msgs);
+        // vel_msgs.angular.z = 0.0;
+        // vel_pub_->publish(vel_msgs);
         sound_->publish(sonido2_);
         RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
-        return BT::NodeStatus::SUCCESS;
+        // return BT::NodeStatus::SUCCESS;
       }
       // // ID de mochila = 26
       if (det.class_id == 26) {
