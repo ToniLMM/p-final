@@ -94,6 +94,34 @@ Este nodo, usado en el Behavior Tree, envía una orden de navegación al sistema
 
 ### Turn
 
+Este nodo define una acción llamada Turn. Su propósito principal es hacer que el robot gire sobre su eje Z mientras busca ciertos objetos por un sistema de visión basado en YOLO, y responde de forma específica a ellos.
+
+Cuenta con un Callback que guarda las detecciones más recientes recibidas del tópico /yolo/detections.
+
+![imagen](https://github.com/user-attachments/assets/b5f8ee10-0b81-49f0-9271-d1d0dcfcad1e)
+
+Método principal tick():
+
+  - Este método se ejecuta repetidamente como parte del árbol de comportamiento.
+
+  - La deteccion se inicia cuando el estado es IDLE, primero se inicia un temporizador y se limpian las detecciones anteriores.
+
+![imagen](https://github.com/user-attachments/assets/ab8bc9e4-440d-465c-88e6-4c4e3733c05c)
+
+  - Siempre que la variable controladora del tiempo no sobrepase los 8 segundos pasara lo siguiente:
+
+    1. Publica una velocidad angular constante (0.5 rad/s) para hacer que el robot gire.
+
+    2. Detecta objetos y los clasifica segun su ID:
+
+       - Si detecta una persona se detiene, reproduce un sonido, y retorna SUCCESS, y volvera inmediatamente al punto de partida.
+         Simulando una huida.
+
+       - Si detecta un objeto de los que le hemos indicado como valioso, hara un sonido indicando que se lo ha llevado.
+
+       - Si no ha detectado ninguna persona durante el barrido de 8 segundos devolvera un FAILURE.
+
+  ![imagen](https://github.com/user-attachments/assets/45ddf09e-5427-4a6d-9aa1-5ac3c4dc8e7a)
 
 
 ## Video Final
