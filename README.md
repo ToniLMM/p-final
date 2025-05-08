@@ -9,6 +9,9 @@ Este proyecto final hace uso de diferentes aspectos aprendidos en clase como son
 
 ## BT
 
+![image](https://github.com/user-attachments/assets/6f59cccc-ce21-4ae2-846d-8206e223a9aa)
+
+
 ## Dependencias
 
 Para usar este programa tendremos que tener instalado los siguientes paquetes:
@@ -26,7 +29,15 @@ ros2 run kobuki_keyop kobuki_keyop_node
 ros2 run nav2_map_server map_saver_cli -f [nombre_mapa]
 ```
 
-![mapa_uni](https://github.com/user-attachments/assets/1decf9cc-d560-4a5b-90ce-31b43fc18364)
+Mapa inicial:
+
+![image](https://github.com/user-attachments/assets/db9a07fb-374b-4830-af08-14474c9f1ade)
+
+Mapa mejorado:
+
+![image](https://github.com/user-attachments/assets/c82bc5ed-8ab0-495a-8601-5b1fcce9dec6)
+
+
 
 ## Ejecución
 
