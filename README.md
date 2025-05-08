@@ -7,7 +7,7 @@ Este proyecto final hace uso de diferentes aspectos aprendidos en clase como son
 
 ## Comportamiento básico
 
-El robot entra en una casa y hace un recorrido de 4 waypoints, la entrada y otros 3 alrededor de ella. En cada waypoint el robot mediante yolo y mientra gira, busca los objetos de valor (botella, ordenador, pelota y mochila), cuando los encuentra emite un sonido, uno diferente por cada objeto. Si en cualquiera de los waypoints detecta a una persona, el robot emite un sonido y seguidamente huye al waypoint de entrada para escapar.
+El robot entra en una casa y hace un recorrido de 4 waypoints, la entrada y otros 3 alrededor de ella. En cada waypoint el robot mediante yolo y mientra gira, busca los objetos de valor (botella, ordenador, pelota y mochila), cuando los encuentra emite un sonido, uno diferente por cada objeto. Si en cualquiera de los waypoints detecta a una persona, el robot emite un sonido y seguidamente huye al waypoint de entrada para escapar. Si el robot consigue llegar al waypoint 4 sin ser pillado vuelve a la entrada con todo el botín recolectado
 
 ![WhatsApp Image 2025-05-08 at 20 10 21](https://github.com/user-attachments/assets/af478300-70fb-411c-b90d-9c6f9710a410)
 
