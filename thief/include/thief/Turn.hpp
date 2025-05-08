@@ -54,6 +54,7 @@ private:
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr vel_pub_;
   rclcpp::Publisher<kobuki_ros_interfaces::msg::Sound>::SharedPtr sound_;
   rclcpp::Subscription<yolo_msgs::msg::DetectionArray>::SharedPtr detections_subscription_;
+  rclcpp::Clock clock_;
 
   std::vector<yolo_msgs::msg::Detection> latest_detections_;
   kobuki_ros_interfaces::msg::Sound sonido1_;
