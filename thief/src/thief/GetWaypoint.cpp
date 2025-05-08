@@ -75,10 +75,10 @@ GetWaypoint::tick()
   std::string id;
   getInput("wp_id", id);
 
-  if (id == "next"){
+  if (id == "next") {
     setOutput("waypoint", waypoints_[current_++]);
     current_ = current_ % waypoints_.size();
-  } else if (id == "base"){
+  } else if (id == "base") {
     setOutput("waypoint", base);
   }
 

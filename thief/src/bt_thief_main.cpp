@@ -58,7 +58,7 @@ int main(int argc, char * argv[])
   // while (rclcpp::ok()) {
   //   BT::NodeStatus status = tree.rootNode()->executeTick();
     rclcpp::spin_some(node);
-    
+
     // if (status == BT::NodeStatus::SUCCESS) {
     //   RCLCPP_INFO(node->get_logger(),
     //               "¡ReactiveSequence completó con SUCCESS! Saliendo.");

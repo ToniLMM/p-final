@@ -21,7 +21,6 @@
 
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "rclcpp/rclcpp.hpp"
 
 namespace thief
 {
@@ -87,7 +86,7 @@ Turn::tick()
         vel_msgs.angular.z = 0.0;
         vel_pub_->publish(vel_msgs);
         sound_->publish(sonido1_);
-        RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");          
+        RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");
         return BT::NodeStatus::SUCCESS;
       }
       // ID de pelota = 32
@@ -113,7 +112,7 @@ Turn::tick()
         RCLCPP_INFO(node_->get_logger(), "LAPTOP DETECTED!");
       }
       // // ID de botella = 39
-      if (det.class_id == 39 ) {
+      if (det.class_id == 39) {
         // vel_msgs.angular.z = 0.0;
         // vel_pub_->publish(vel_msgs);
         sound_->publish(sonido5_);
@@ -122,8 +121,7 @@ Turn::tick()
     }
 
     return BT::NodeStatus::RUNNING;
-  }
-  else{
+  } else {
     return BT::NodeStatus::FAILURE;
   }
 }

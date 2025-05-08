@@ -58,7 +58,6 @@ GetWaypoint2::GetWaypoint2(
   wp.pose.position.x = 5.3175;
   wp.pose.position.y = -1.2676;
   waypoints_.push_back(wp);
-  
 }
 
 // void
@@ -77,10 +76,9 @@ GetWaypoint2::tick()
 
   // Si no ha pasado 3s, seguimos ejecutando
   if (elapsed < 3s) {
-    RCLCPP_INFO(node_->get_logger(), "GETTING WAYPOINT..."); 
+    RCLCPP_INFO(node_->get_logger(), "GETTING WAYPOINT...");
     return BT::NodeStatus::RUNNING;
-  }
-  else{ 
+  } else {
     setOutput("waypoint", waypoints_[current_++]);
     current_ = current_ % waypoints_.size();
     return BT::NodeStatus::SUCCESS;

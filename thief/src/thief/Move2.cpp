@@ -42,7 +42,7 @@ Move2::Move2(
 
 BT::NodeStatus
 Move2::tick()
-{ 
+{
   geometry_msgs::msg::PoseStamped goal;
   if (getInput("goal", goal)) {
     const auto & p = goal.pose.position;
@@ -63,16 +63,13 @@ Move2::tick()
 
     // Si no ha pasado 3s, seguimos girando
     if (elapsed < 3s) {
-      RCLCPP_INFO(node_->get_logger(), "MOVING..."); 
+      RCLCPP_INFO(node_->get_logger(), "MOVING...");
       return BT::NodeStatus::RUNNING;
-    }
-    else{
+    } else {
       return BT::NodeStatus::SUCCESS;
     }
-  }
-  else{
-    RCLCPP_ERROR(node_->get_logger(),
-                  "[Move2] Falta el input “goal”");
+  } else {
+    RCLCPP_ERROR(node_->get_logger(), "[Move2] Falta el input “goal”");
     return BT::NodeStatus::FAILURE;
   }
 }

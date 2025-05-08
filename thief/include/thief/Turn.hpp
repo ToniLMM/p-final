@@ -16,6 +16,7 @@
 #define THIEF__TURN_HPP_
 
 #include <string>
+#include <vector>
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"

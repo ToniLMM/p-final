@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef THIEF_GETWAYPOINT_HPP
-#define THIEF_GETWAYPOINT_HPP
+#ifndef THIEF__GETWAYPOINT_HPP_
+#define THIEF__GETWAYPOINT_HPP_
 
 #include <string>
+#include <vector>
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
@@ -52,4 +53,4 @@ private:
 
 }  // namespace thief
 
-#endif  // THIEF_GETWAYPOINT_HPP
+#endif  // THIEF__GETWAYPOINT_HPP_
