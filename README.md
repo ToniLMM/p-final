@@ -7,6 +7,9 @@ Este proyecto final hace uso de diferentes aspectos aprendidos en clase como son
 
 ## Comportamiento básico
 
+
+![WhatsApp Image 2025-05-08 at 20 10 21](https://github.com/user-attachments/assets/af478300-70fb-411c-b90d-9c6f9710a410)
+
 ## BT
 
 ![image](https://github.com/user-attachments/assets/f28fb256-88b9-4562-8178-f75f98cf986c)
