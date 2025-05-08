@@ -87,23 +87,23 @@ Turn::tick()
     // Procesamiento de las detecciones de yolo
     for (auto & det : latest_detections_) {
       // ID de person = 0
-      // if (det.class_id == 0) {
-      //   vel_msgs.angular.z = 0.0;
-      //   vel_pub_->publish(vel_msgs);
-      //   RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");
-      //   // playSound(kobuki_msgs::msg::Sound::ERROR);
-          
-      //   return BT::NodeStatus::SUCCESS;
-      // }
-      // ID de pelota = 32
-      if (det.class_id == 32) {
+      if (det.class_id == 0) {
         vel_msgs.angular.z = 0.0;
         vel_pub_->publish(vel_msgs);
-        RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
-        // playSound(kobuki_msgs::msg::Sound::BUTTON); 
-
+        RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");
+        // playSound(kobuki_msgs::msg::Sound::ERROR);
+          
         return BT::NodeStatus::SUCCESS;
       }
+      // ID de pelota = 32
+      // if (det.class_id == 32) {
+      //   vel_msgs.angular.z = 0.0;
+      //   vel_pub_->publish(vel_msgs);
+      //   RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
+      //   playSound(kobuki_msgs::msg::Sound::BUTTON); 
+
+      //   return BT::NodeStatus::SUCCESS;
+      // }
       // // ID de mochila = 26
       // if (det.class_id == 26) {
       //   RCLCPP_INFO(node_->get_logger(), "BAG DETECTED!");

@@ -2,7 +2,7 @@
 <root main_tree_to_execute="BehaviorTree">
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
-        <ReactiveSequence>
+        <Sequence>
             <RetryUntilSuccessful num_attempts="4">
                 <Inverter>
                     <Sequence>
@@ -18,7 +18,7 @@
                 <Action ID="GetWaypoint2" waypoint="{wp}" wp_id="next"/>
                 <Action ID="Move2" goal="{wp}"/>
             </Sequence>
-        </ReactiveSequence>
+        </Sequence>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
