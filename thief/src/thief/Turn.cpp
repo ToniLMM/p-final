@@ -42,11 +42,11 @@ Turn::Turn(
   detections_subscription_ = node_->create_subscription<yolo_msgs::msg::DetectionArray>(
     "/yolo/detections", 10, std::bind(&Turn::detectionsCallback, this, std::placeholders::_1));
 
-  sonido1_.value = 5;
-  sonido2_.value = 6;
-  sonido3_.value = 3;
-  sonido4_.value = 4;
-  sonido5_.value = 5;
+  sonido1_.value = 2;
+  sonido2_.value = 3;
+  sonido3_.value = 4;
+  sonido4_.value = 5;
+  sonido5_.value = 6;
 }
 
 void Turn::detectionsCallback(const yolo_msgs::msg::DetectionArray::SharedPtr msg)
@@ -79,7 +79,7 @@ Turn::tick()
   auto elapsed = node_->now() - start_time_;
 
   // Si no ha pasado 8s, seguimos girando
-  if (elapsed < 8s) {
+  if (elapsed < 3s) {
     geometry_msgs::msg::Twist vel_msgs;
     vel_msgs.angular.z = 0.5;
     vel_pub_->publish(vel_msgs);
@@ -91,34 +91,40 @@ Turn::tick()
       if (det.class_id == 0) {
         vel_msgs.angular.z = 0.0;
         vel_pub_->publish(vel_msgs);
-        RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");
         sound_->publish(sonido1_);
-          
+        RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");          
         return BT::NodeStatus::SUCCESS;
       }
       // ID de pelota = 32
       if (det.class_id == 32) {
-        // vel_msgs.angular.z = 0.0;
-        // vel_pub_->publish(vel_msgs);
-        RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
+        vel_msgs.angular.z = 0.0;
+        vel_pub_->publish(vel_msgs);
         sound_->publish(sonido2_);
+        RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
       }
-      // ID de mochila = 26
+      // // ID de mochila = 26
       if (det.class_id == 26) {
-        RCLCPP_INFO(node_->get_logger(), "BAG DETECTED!");
+        vel_msgs.angular.z = 0.0;
+        vel_pub_->publish(vel_msgs);
         sound_->publish(sonido3_);
+        RCLCPP_INFO(node_->get_logger(), "BAG DETECTED!");
       }
-      // ID de ordenador = 63
+      // // ID de ordenador = 63
       if (det.class_id == 63) {
-        RCLCPP_INFO(node_->get_logger(), "LAPTOP DETECTED!");
+        vel_msgs.angular.z = 0.0;
+        vel_pub_->publish(vel_msgs);
         sound_->publish(sonido4_);
+        RCLCPP_INFO(node_->get_logger(), "LAPTOP DETECTED!");
       }
-      // ID de botella = 39
+      // // ID de botella = 39
       if (det.class_id == 39 ) {
-        RCLCPP_INFO(node_->get_logger(), "BOTTLE DETECTED!");
+        vel_msgs.angular.z = 0.0;
+        vel_pub_->publish(vel_msgs);
         sound_->publish(sonido5_);
+        RCLCPP_INFO(node_->get_logger(), "BOTTLE DETECTED!");
       }
     }
+
     return BT::NodeStatus::RUNNING;
   }
   else{

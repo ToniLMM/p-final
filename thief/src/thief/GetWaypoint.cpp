@@ -27,6 +27,8 @@
 namespace thief
 {
 
+int GetWaypoint::current_ = 0;
+
 GetWaypoint::GetWaypoint(
   const std::string & xml_tag_name,
   const BT::NodeConfiguration & conf)
