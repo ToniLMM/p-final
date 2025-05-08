@@ -9,7 +9,7 @@ Este proyecto final hace uso de diferentes aspectos aprendidos en clase como son
 
 ## BT
 
-![image](https://github.com/user-attachments/assets/6f59cccc-ce21-4ae2-846d-8206e223a9aa)
+![image](https://github.com/user-attachments/assets/f28fb256-88b9-4562-8178-f75f98cf986c)
 
 
 ## Dependencias
