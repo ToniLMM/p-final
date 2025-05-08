@@ -84,16 +84,17 @@ Turn::tick()
     vel_msgs.angular.z = 0.5;
     vel_pub_->publish(vel_msgs);
     RCLCPP_INFO(node_->get_logger(), "TURNING...");
+    RCLCPP_INFO(node_->get_logger(), "Elapsed time: %.2f seconds", elapsed.seconds());
 
     // Procesamiento de las detecciones de yolo
     for (auto & det : latest_detections_) {
       // ID de person = 0
       if (det.class_id == 0) {
-        vel_msgs.angular.z = 0.0;
-        vel_pub_->publish(vel_msgs);
+        // vel_msgs.angular.z = 0.0;
+        // vel_pub_->publish(vel_msgs);
         sound_->publish(sonido1_);
         RCLCPP_INFO(node_->get_logger(), "PERSON DETECTED!");          
-        return BT::NodeStatus::SUCCESS;
+        // return BT::NodeStatus::SUCCESS;
       }
       // ID de pelota = 32
       if (det.class_id == 32) {
@@ -101,25 +102,26 @@ Turn::tick()
         vel_pub_->publish(vel_msgs);
         sound_->publish(sonido2_);
         RCLCPP_INFO(node_->get_logger(), "BALL DETECTED!");
+        return BT::NodeStatus::SUCCESS;
       }
       // // ID de mochila = 26
       if (det.class_id == 26) {
-        vel_msgs.angular.z = 0.0;
-        vel_pub_->publish(vel_msgs);
+        // vel_msgs.angular.z = 0.0;
+        // vel_pub_->publish(vel_msgs);
         sound_->publish(sonido3_);
         RCLCPP_INFO(node_->get_logger(), "BAG DETECTED!");
       }
       // // ID de ordenador = 63
       if (det.class_id == 63) {
-        vel_msgs.angular.z = 0.0;
-        vel_pub_->publish(vel_msgs);
+        // vel_msgs.angular.z = 0.0;
+        // vel_pub_->publish(vel_msgs);
         sound_->publish(sonido4_);
         RCLCPP_INFO(node_->get_logger(), "LAPTOP DETECTED!");
       }
       // // ID de botella = 39
       if (det.class_id == 39 ) {
-        vel_msgs.angular.z = 0.0;
-        vel_pub_->publish(vel_msgs);
+        // vel_msgs.angular.z = 0.0;
+        // vel_pub_->publish(vel_msgs);
         sound_->publish(sonido5_);
         RCLCPP_INFO(node_->get_logger(), "BOTTLE DETECTED!");
       }
